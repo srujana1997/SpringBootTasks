@@ -5,13 +5,26 @@ import com.stackroute.Muzix.Exceptions.TrackNotFound;
 import com.stackroute.Muzix.Repository.MuzixRepository;
 import com.stackroute.Muzix.Track;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MuzixServiceImpl implements MuzixService {
+public class MuzixServiceImpl implements MuzixService, ApplicationListener<ContextRefreshedEvent>, CommandLineRunner {
+    @Value("${track.1.name:default}")
+    String name1;
+    @Value("${track.1.comments:default}")
+    String comments1;
+    @Value("${track.2.name:default}")
+    String name2;
+    @Value("${track.2.comments:default}")
+    String comments2;
+
     MuzixRepository muzixRepository;
     @Autowired
     public MuzixServiceImpl(MuzixRepository muzixRepository) {
@@ -70,4 +83,14 @@ public class MuzixServiceImpl implements MuzixService {
         return muzixRepository.findById(id);
     }
 
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println("CommandLineRunner Implemented");
+    }
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        muzixRepository.save(new Track(1,name1,comments1));
+        muzixRepository.save(new Track(2,name2,comments2));
+    }
 }
