@@ -1,5 +1,6 @@
 package com.stackroute.Muzix.Controller;
 
+import com.stackroute.Muzix.Exceptions.TrackExist;
 import com.stackroute.Muzix.Service.MuzixService;
 import com.stackroute.Muzix.Track;
 import org.apache.coyote.Response;
@@ -20,8 +21,8 @@ public class MuzixController {
         this.muzixService = muzixService;
     }
     @PostMapping("track")
-    public ResponseEntity<?> saveTrack(@RequestBody Track track){
-        ResponseEntity responseEntity;
+    public ResponseEntity<?> saveTrack(@RequestBody Track track) throws TrackExist {
+       /* ResponseEntity responseEntity;
         try{
             muzixService.saveTrack(track);
             responseEntity=new ResponseEntity<String>("Successfully created", HttpStatus.CREATED);
@@ -29,7 +30,11 @@ public class MuzixController {
         catch(Exception exception){
             responseEntity=new ResponseEntity<String>(exception.getMessage(),HttpStatus.CONFLICT);
         }
-        return responseEntity;
+        return responseEntity;*/
+        muzixService.saveTrack(track);
+        return new ResponseEntity<String>("Successfully created", HttpStatus.CREATED);
+
+
     }
     @GetMapping("track")
     public ResponseEntity<?> getAllTracks(){
