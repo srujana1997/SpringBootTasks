@@ -6,6 +6,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import javax.persistence.*;
 
 @Entity
+//@Table(name="Track")
+//@DataAmount
+//@NoArgsConstructor
+//@Builder
 public class Track {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

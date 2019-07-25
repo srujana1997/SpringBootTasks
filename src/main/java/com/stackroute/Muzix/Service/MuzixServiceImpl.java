@@ -54,4 +54,9 @@ public class MuzixServiceImpl implements MuzixService {
     public Optional<Track> getTrackById(int id) {
         return muzixRepository.findById(id);
     }
+    @Override
+    public List<Track> getByName(String name) {
+        List<Track> tracks=muzixRepository.findTitleByName(name);
+        return tracks;
+    }
 }
