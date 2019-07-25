@@ -9,6 +9,4 @@ import java.util.List;
 
 @Repository
 public interface MuzixRepository extends JpaRepository<Track,Integer> {
-    @Query(value = "select * from Track where name=?1",nativeQuery = true)
-    List<Track> findTitleByName(String name);
 }
