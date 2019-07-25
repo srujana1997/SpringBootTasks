@@ -1,5 +1,7 @@
 package com.stackroute.Muzix.Service;
 
+import com.stackroute.Muzix.Exceptions.TrackExist;
+import com.stackroute.Muzix.Exceptions.TrackNotFound;
 import com.stackroute.Muzix.Repository.MuzixRepository;
 import com.stackroute.Muzix.Track;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +22,23 @@ public class MuzixServiceImpl implements MuzixService {
     }
 
     @Override
-    public boolean saveTrack(Track track) {
-        Track saveTrack=muzixRepository.save(track);
+    public boolean saveTrack(Track track)throws TrackExist {
+        if(muzixRepository.existsById(track.getId())) {
+            throw new TrackExist("id already exists");
+        }
+            Track saveTrack=muzixRepository.save(track);
         return true;
     }
 
-    @Override
-    public boolean deleteTrack(int id) {
 
+
+
+    @Override
+    public boolean deleteTrack(int id) throws TrackNotFound{
+        Track track=new Track();
+        if(!muzixRepository.findById(id).isPresent()){
+            throw new TrackNotFound("id not found");
+        }
         muzixRepository.deleteById(id);
 
         return true;
@@ -40,10 +51,11 @@ public class MuzixServiceImpl implements MuzixService {
     }
 
     @Override
-    public boolean updateTrack(Track track,int id) {
+    public boolean updateTrack(Track track,int id) throws TrackNotFound {
         Optional<Track> useOptional=muzixRepository.findById(id);
         if (!useOptional.isPresent()){
-            return false;
+            throw new TrackNotFound("id not found");
+
         }
         track.setId(id);
         muzixRepository.save(track);
@@ -51,7 +63,10 @@ public class MuzixServiceImpl implements MuzixService {
     }
 
     @Override
-    public Optional<Track> getTrackById(int id) {
+    public Optional<Track> getTrackById(int id) throws TrackNotFound {
+        if(!muzixRepository.findById(id).isPresent()){
+            throw new TrackNotFound("id not found");
+        }
         return muzixRepository.findById(id);
     }
 
