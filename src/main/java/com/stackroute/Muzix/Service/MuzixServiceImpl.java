@@ -16,15 +16,19 @@ import java.util.Optional;
 
 @Service
 public class MuzixServiceImpl implements MuzixService, ApplicationListener<ContextRefreshedEvent>, CommandLineRunner {
+    //MuzixRepository object to perform database
+
     MuzixRepository muzixRepository;
 
     @Autowired
+    //Autowired constructor to inject dependency
     public MuzixServiceImpl(MuzixRepository muzixRepository)
     {
         this.muzixRepository = muzixRepository;
     }
 
     @Override
+    //method to save track
     public Track saveTrack(Track track) throws TrackExist {
 
         if(muzixRepository.existsById(track.getId()))
@@ -41,6 +45,7 @@ public class MuzixServiceImpl implements MuzixService, ApplicationListener<Conte
     }
 
     @Override
+    //method to get all tracks
     public List<Track> getAllTracks() {
 
         return muzixRepository.findAll();
@@ -55,6 +60,7 @@ public class MuzixServiceImpl implements MuzixService, ApplicationListener<Conte
 //
 //    }
 
+    //method to update track
     public Track updateTrack(Track track, int id) throws TrackNotFound
     {
         Optional<Track> track1 = muzixRepository.findById(id);
@@ -70,6 +76,7 @@ public class MuzixServiceImpl implements MuzixService, ApplicationListener<Conte
         return savedTrack;
     }
 
+    //method to delete track
     public boolean deleteTrack(int id) throws TrackNotFound
     {
         Optional<Track> track1 = muzixRepository.findById(id);
