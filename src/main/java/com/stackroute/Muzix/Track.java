@@ -4,28 +4,29 @@ import com.fasterxml.jackson.annotation.JsonTypeId;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
-
+//@Entity used to mark it as a database entity
 @Entity
 //@Table(name="Track")
 //@DataAmount
 //@NoArgsConstructor
 //@Builder
 public class Track {
+    //annotated with @Id to make it primary key in database
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
-    private int id;
+    private int id;//Track's id
     @Column
-    private String name;
+    private String name;//track's name
     @Column
-    private String comment;
-
+    private String comment;//track's comment
+    //all arguments constructor
     public Track(int id, String name, String comment) {
         this.id = id;
         this.name = name;
         this.comment = comment;
     }
-
+    //no argument constructor
     public  Track(){
 
     }
