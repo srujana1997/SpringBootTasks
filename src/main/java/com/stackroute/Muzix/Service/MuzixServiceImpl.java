@@ -10,8 +10,10 @@ import java.util.Optional;
 
 @Service
 public class MuzixServiceImpl implements MuzixService {
+    //MuzixRepository object to perform database
     MuzixRepository muzixRepository;
     @Autowired
+    //Autowired constructor to inject dependency
     public MuzixServiceImpl(MuzixRepository muzixRepository) {
         this.muzixRepository = muzixRepository;
     }
@@ -20,12 +22,14 @@ public class MuzixServiceImpl implements MuzixService {
     }
 
     @Override
+    //method to save track
     public boolean saveTrack(Track track) {
         Track saveTrack=muzixRepository.save(track);
         return true;
     }
 
     @Override
+    //method to delete track
     public boolean deleteTrack(int id) {
 
         muzixRepository.deleteById(id);
@@ -34,12 +38,14 @@ public class MuzixServiceImpl implements MuzixService {
     }
 
     @Override
+    //method to get all tracks
     public List<Track> getAllTracks() {
        return muzixRepository.findAll();
 
     }
 
     @Override
+    //method to update a track
     public boolean updateTrack(Track track,int id) {
         Optional<Track> useOptional=muzixRepository.findById(id);
         if (!useOptional.isPresent()){
@@ -51,6 +57,7 @@ public class MuzixServiceImpl implements MuzixService {
     }
 
     @Override
+    //method to get track by id
     public Optional<Track> getTrackById(int id) {
         return muzixRepository.findById(id);
     }
