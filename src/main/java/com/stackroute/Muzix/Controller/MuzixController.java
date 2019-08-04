@@ -10,16 +10,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.EmptyStackException;
 import java.util.List;
-
+//Controller class that handles requests and sends a response
 @RestController
 @RequestMapping(value = "api/v1")
 public class MuzixController {
+        //Autowired to inject the muzixService dependency
     @Autowired
     MuzixService muzixService;
     public MuzixController(MuzixService muzixService) {
         this.muzixService = muzixService;
     }
     @PostMapping("track")
+     //handler to save track
     public ResponseEntity<?> saveTrack(@RequestBody Track track){
         ResponseEntity responseEntity;
         try{
@@ -32,11 +34,13 @@ public class MuzixController {
         return responseEntity;
     }
     @GetMapping("track")
+     //handler to get all tracks
     public ResponseEntity<?> getAllTracks(){
      return new ResponseEntity<List<Track>>(muzixService.getAllTracks(),HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")
+     //handler to delete a track by its id
     public ResponseEntity<?> deleteTrack(@PathVariable int id){
         ResponseEntity responseEntity;
         try{
@@ -50,6 +54,7 @@ public class MuzixController {
     }
 
     @PutMapping("update/{id}")
+    //handler to update a track by its id
     public ResponseEntity<?> updateTrack(@RequestBody Track track, @PathVariable int id){
         ResponseEntity responseEntity;
         try{
