@@ -24,9 +24,10 @@ public class MuzixServiceImpl implements MuzixService, ApplicationListener<Conte
     String name2;
     @Value("${track.2.comments:default}")
     String comments2;
-
+    //MuzixRepository object to perform database
     MuzixRepository muzixRepository;
     @Autowired
+    //Autowired constructor to inject dependency
     public MuzixServiceImpl(MuzixRepository muzixRepository) {
         this.muzixRepository = muzixRepository;
     }
@@ -35,6 +36,7 @@ public class MuzixServiceImpl implements MuzixService, ApplicationListener<Conte
     }
 
     @Override
+    //method to save track
     public boolean saveTrack(Track track)throws TrackExist {
         if(muzixRepository.existsById(track.getId())) {
             throw new TrackExist("id already exists");
@@ -42,11 +44,8 @@ public class MuzixServiceImpl implements MuzixService, ApplicationListener<Conte
             Track saveTrack=muzixRepository.save(track);
         return true;
     }
-
-
-
-
     @Override
+    //method to delete track
     public boolean deleteTrack(int id) throws TrackNotFound{
         Track track=new Track();
         if(!muzixRepository.findById(id).isPresent()){
@@ -56,14 +55,14 @@ public class MuzixServiceImpl implements MuzixService, ApplicationListener<Conte
 
         return true;
     }
-
     @Override
+    //method to get all tracks
     public List<Track> getAllTracks() {
        return muzixRepository.findAll();
 
     }
-
     @Override
+    //method to update track
     public boolean updateTrack(Track track,int id) throws TrackNotFound {
         Optional<Track> useOptional=muzixRepository.findById(id);
         if (!useOptional.isPresent()){
@@ -76,6 +75,7 @@ public class MuzixServiceImpl implements MuzixService, ApplicationListener<Conte
     }
 
     @Override
+    //method to get track by id
     public Optional<Track> getTrackById(int id) throws TrackNotFound {
         if(!muzixRepository.findById(id).isPresent()){
             throw new TrackNotFound("id not found");
