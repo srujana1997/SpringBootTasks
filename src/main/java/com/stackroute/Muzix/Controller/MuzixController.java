@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//Controller class that handles requests and sends a response
 @RestController
 @RequestMapping(value = "api/v1")
 public class MuzixController {
@@ -26,6 +26,7 @@ public class MuzixController {
     }
 
     @PostMapping("track")
+    //handler to save track
     public ResponseEntity<?> saveTrack(@RequestBody Track track) {
         ResponseEntity responseEntity;
         try {
@@ -38,6 +39,7 @@ public class MuzixController {
     }
 
     @PostMapping("alltracks")
+      //handler to save all tracks
     public ResponseEntity<?> saveAllTrack(@RequestBody List<Track> trackList) throws TrackExist
     {
         List<Track> savedTrackList = new ArrayList<Track>();
@@ -55,6 +57,7 @@ public class MuzixController {
 //    }
 
     @GetMapping("track")
+      //handler to get all tracks
     public ResponseEntity<?> getAllTracks() {
         ResponseEntity responseEntity;
 
@@ -70,6 +73,7 @@ public class MuzixController {
     }
 
     @PutMapping("track/{id}")
+      //handler to delete track
     public ResponseEntity<?> updateTrack(@RequestBody Track track, @PathVariable int id) {
         ResponseEntity responseEntity;
         try {
@@ -82,6 +86,7 @@ public class MuzixController {
     }
 
     @DeleteMapping("track/{id}")
+      //handler to delete track
     public ResponseEntity<?> deleteTrack(@PathVariable int id) {
         ResponseEntity responseEntity;
         try {
